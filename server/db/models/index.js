@@ -15,6 +15,5 @@ const Events = require('./events');
  * instead of: const User = require('../db/models/user')
  */
 module.exports = {
-  User,
   Events,
 };

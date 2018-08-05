@@ -25,7 +25,7 @@ router.use('/', async (req, res, next) => {
       },
     });
     console.log('RESULT: ', result);
-    res.status(201).end;
+    res.status(201).end();
   } catch (err) {
     console.log('caught error!');
     next(err);

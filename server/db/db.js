@@ -1,3 +1,4 @@
+var path = require('path');
 const Sequelize = require('sequelize');
 const pkg = require('../../package.json');
 const databaseName = 'retrosheet';
@@ -10,10 +11,18 @@ const db = new Sequelize(
   {
     logging: false,
     dialect: 'mysql',
+    define: {
+      timestamps: false,
+    },
   }
 );
 // const Events = db.import('events', require('./models/events.js'));
 // const Events = require('./models/events')(db, DataTypes);
+// const models = require('sequelize-auto-import')(
+//   db,
+//   path.join(__dirname, '/models/events')
+// );
+
 module.exports = db;
 // module.exports = Events;
 
