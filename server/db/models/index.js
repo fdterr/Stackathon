@@ -1,5 +1,8 @@
 const User = require('./user');
-const Events = require('./events');
+const db = require('../db');
+const DataTypes = require('sequelize/lib/data-types');
+const Events = require('./events')(db, DataTypes);
+const Games = require('./games')(db, DataTypes);
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -14,6 +17,10 @@ const Events = require('./events');
  * for example, we can say: const {User} = require('../db/models')
  * instead of: const User = require('../db/models/user')
  */
-module.exports = {
-  Events,
-};
+
+// Games.belongsTo(Events, { through: 'GAME_ID' });
+
+// module.exports = {
+//   Events,
+//   Games,
+// };

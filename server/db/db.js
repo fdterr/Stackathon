@@ -1,9 +1,6 @@
-var path = require('path');
 const Sequelize = require('sequelize');
 const pkg = require('../../package.json');
 const databaseName = 'retrosheet';
-const DataTypes = require('sequelize/lib/data-types');
-// pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '');
 
 const db = new Sequelize(
   process.env.DATABASE_URL ||
@@ -16,12 +13,6 @@ const db = new Sequelize(
     },
   }
 );
-// const Events = db.import('events', require('./models/events.js'));
-// const Events = require('./models/events')(db, DataTypes);
-// const models = require('sequelize-auto-import')(
-//   db,
-//   path.join(__dirname, '/models/events')
-// );
 
 module.exports = db;
 // module.exports = Events;
