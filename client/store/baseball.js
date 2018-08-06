@@ -10,7 +10,10 @@ const SET_BATTING = 'SET_BATTING';
 /**
  * INITIAL STATE
  */
-const defaultState = {};
+const defaultState = {
+  inning: 1,
+  batting: 'homeTeam',
+};
 
 /**
  * ACTION CREATORS
@@ -74,9 +77,9 @@ export const setBatting = batting => {
 export default function(state = defaultState, action) {
   switch (action.type) {
     case SET_INNING:
-      return action.inning;
+      return { ...state, inning: action.inning };
     case SET_BATTING:
-      return action.batting;
+      return { ...state, batting: action.batting };
     default:
       return state;
   }
