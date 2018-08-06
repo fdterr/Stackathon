@@ -18,12 +18,9 @@ export default class Calculator extends Component {
         <Score />
         <br />
         <hr />
-        <Years />
-        <br />
-        <hr />
         <Runners />
         <br />
-        <hr />
+        <button type="submit">Calculate Win Expectancy</button>
       </div>
     );
   }
