@@ -3,6 +3,10 @@ const db = require('../db/db');
 const DataTypes = require('sequelize/lib/data-types');
 const Events = require('../db/models/events')(db, DataTypes);
 const Games = require('../db/models/games')(db, DataTypes);
+const records = require('../db/models/records')(db, DataTypes);
+const game_records = require('../db/models/game_records')(db, DataTypes);
+const axios = require('axios');
+const request = require('request');
 // const Sequelize = require('sequelize');
 // const Models = require('../db/models');
 // const Events = Models.Events;
@@ -10,20 +14,24 @@ const Games = require('../db/models/games')(db, DataTypes);
 // const Events = require('../db/models/events')(Sequelize, DataTypes);
 
 module.exports = router;
+// Events.hasMany(Games, { foreignKey: 'GAME_ID' });
+// Games.belongsTo(Events, { as: 'games', foreignKey: 'GAME_ID' });
+// Events.belongsTo(Games, { foreignKey: 'GAME_ID' });
+// Games.hasMany(Events, { foreignKey: 'GAME_ID' });
+
+Events.belongsToMany(Games, { through: 'GAME_ID' });
+Games.belongsToMany(Events, { through: 'GAME_ID' });
 
 // router.use('/', async (req, res, next) => {
 //   console.log('hit this route!', Events);
 //   try {
-//     // const result1 = await User.findOne({
-//     //   where: {
-//     //     YEAR_ID: '1952',
-//     //   },
-//     // });
-//     // console.log('RESULT1: ', result1);
-//     const result = await Events.findOne({
+//     const result = await Events.findAll({
 //       where: {
 //         YEAR_ID: '1952',
+//         GAME_ID: 'BOS195204180',
+//         INN_CT: '1',
 //       },
+//       include: [Games],
 //     });
 //     console.log('RESULT: ', result);
 //     // res.status(201).end();
@@ -34,30 +42,51 @@ module.exports = router;
 //   }
 // });
 
-// Games.belongsToMany(Events, { through: 'GAME_ID' });
-Events.hasMany(Games, { foreignKey: 'GAME_ID' });
-
-router.use('/test', async (req, res, next) => {
-  console.log('hit games route', Games);
+router.use('/scrape', async (req, res, next) => {
   try {
-    const result = await Games.findOne({
-      where: {
-        YEAR_ID: '1952',
-      },
-      include: [Events],
-      attributes: ['GAME_ID'],
-      // include: {
-      //   model: Events,
-      //   through: {
-      //     attributes: ['GAME_ID'],
-      //   },
-      // },
-    });
-    res.status(201).json(result);
+    // const response = await request({
+    //   url: 'http://statsapi.mlb.com:80/api/v1/schedule?sportId=1',
+    //   json: true,
+    // });
+    // console.log('response2', response);
+    setInterval(async () => {
+      const data = await axios(
+        'http://statsapi.mlb.com/api/v1/game/531089/feed/live'
+      );
+      const temp = data.data;
+      console.log('TEMP: ', temp);
+      game_records.create({
+        json: JSON.stringify(temp),
+      });
+    }, 20000);
+    res.send(temp);
+    res.end();
   } catch (err) {
     next(err);
   }
 });
+
+// router.use('/test', async (req, res, next) => {
+//   console.log('hit games route', Games);
+//   try {
+//     const result = await Games.findOne({
+//       where: {
+//         YEAR_ID: '1952',
+//       },
+//       include: [Events],
+//       attributes: ['GAME_ID'],
+//       // include: {
+//       //   model: Events,
+//       //   through: {
+//       //     attributes: ['GAME_ID'],
+//       //   },
+//       // },
+//     });
+//     res.status(201).json(result);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 router.use('/users', require('./users'));
 
