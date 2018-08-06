@@ -9,6 +9,7 @@ const SET_BATTING = 'SET_BATTING';
 const SET_HOME_SCORE = 'SET_HOME_SCORE';
 const SET_AWAY_SCORE = 'SET_AWAY_SCORE';
 const SET_RUNNERS = 'SET_RUNNERS';
+const WIN_EXPECTANCY = 'WIN_EXPECTANCY';
 
 /**
  * INITIAL STATE
@@ -57,6 +58,20 @@ export const setRunners = runners => {
   return {
     type: SET_RUNNERS,
     runners,
+  };
+};
+
+/**
+ * Thunky stuff
+ */
+
+export const winExpectancy = situation => {
+  return async dispatch => {
+    try {
+      const response = axios.get('/api/calculate', situation);
+    } catch (err) {
+      console.err(err);
+    }
   };
 };
 
