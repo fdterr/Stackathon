@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = () => (
   <div>
     <h1>Rick Terry's Win Expectancy Calculator</h1>
     <nav>
@@ -22,15 +22,15 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id,
+    // isLoggedIn: !!state.user.id,
   };
 };
 
 const mapDispatch = dispatch => {
   return {
-    handleClick() {
-      dispatch(logout());
-    },
+    // handleClick() {
+    //   dispatch(logout());
+    // },
   };
 };
 
@@ -38,8 +38,8 @@ export default connect(mapState, mapDispatch)(Navbar);
 
 /**
  * PROP TYPES
- */
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-};
+ //  */
+// Navbar.propTypes = {
+//   handleClick: PropTypes.func.isRequired,
+//   isLoggedIn: PropTypes.bool.isRequired,
+// };
