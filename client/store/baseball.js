@@ -26,7 +26,10 @@ const defaultState = {
  */
 
 export const setInning = inning => {
-  type: SET_INNING, inning;
+  return {
+    type: SET_INNING,
+    inning,
+  };
 };
 
 export const setBatting = batting => {

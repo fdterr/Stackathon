@@ -36,6 +36,17 @@ router.use('/', async (req, res, next) => {
   }
 });
 
+router.use('/calculate', async (req, res, next) => {
+  const query = buildQuery(req.body);
+  try {
+    console.log('YOUR QUERY HERE', query);
+    res.end();
+  } catch (err) {
+    next(err);
+  }
+});
+
+// router.use('/users', require('./users'));
 // router.use('/scrape', async (req, res, next) => {
 //   try {
 //     // const response = await request({
@@ -82,10 +93,12 @@ router.use('/', async (req, res, next) => {
 //   }
 // });
 
-router.use('/users', require('./users'));
-
 router.use((req, res, next) => {
   const error = new Error('Not Found');
   error.status = 404;
   next(error);
 });
+
+const buildQuery = request => {
+  console.log(request);
+};
