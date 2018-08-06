@@ -19,8 +19,8 @@ module.exports = router;
 // Events.belongsTo(Games, { foreignKey: 'GAME_ID' });
 // Games.hasMany(Events, { foreignKey: 'GAME_ID' });
 
-Events.belongsToMany(Games, { through: 'GAME_ID' });
-Games.belongsToMany(Events, { through: 'GAME_ID' });
+// Events.belongsToMany(Games, { through: 'GAME_ID' });
+// Games.belongsToMany(Events, { through: 'GAME_ID' });
 
 router.use('/', async (req, res, next) => {
   console.log('hit this route!', Events);
