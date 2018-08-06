@@ -15,13 +15,9 @@ class Score extends Component {
     console.log(event.target.name, event.target.value);
     if (event.target.name === 'homeTeamScore') {
       this.props.setHomeScores(event.target.value);
-      // this.setState({ homeTeamScore: event.target.value });
     } else if (event.target.name === 'awayTeamScore') {
       this.props.setAwayScores(event.target.value);
     }
-    // if(this.state.homeTeamScore !== -1 && this.state.awayTeamScore !== -1) {
-    //   this.setState({scoreDifference: this.state.homeTeamScore})
-    // }
   };
 
   render() {
