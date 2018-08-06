@@ -20,7 +20,7 @@ class Runners extends Component {
               type="radio"
               onChange={this.handleChange}
               name="runners"
-              value={0}
+              value={1}
             />
           </div>
           <br />
@@ -30,7 +30,7 @@ class Runners extends Component {
               type="radio"
               onChange={this.handleChange}
               name="runners"
-              value={1}
+              value={2}
             />
           </div>
 
@@ -41,7 +41,7 @@ class Runners extends Component {
               type="radio"
               onChange={this.handleChange}
               name="runners"
-              value={2}
+              value={3}
             />
           </div>
 
@@ -54,7 +54,7 @@ class Runners extends Component {
               type="radio"
               onChange={this.handleChange}
               name="runners"
-              value={3}
+              value={4}
             />
           </div>
 
@@ -65,7 +65,7 @@ class Runners extends Component {
               type="radio"
               onChange={this.handleChange}
               name="runners"
-              value={4}
+              value={5}
             />
           </div>
 
@@ -78,7 +78,7 @@ class Runners extends Component {
               type="radio"
               onChange={this.handleChange}
               name="runners"
-              value={5}
+              value={6}
             />
           </div>
 
@@ -91,7 +91,7 @@ class Runners extends Component {
               type="radio"
               onChange={this.handleChange}
               name="runners"
-              value={6}
+              value={7}
             />
           </div>
 
@@ -102,7 +102,7 @@ class Runners extends Component {
               type="radio"
               onChange={this.handleChange}
               name="runners"
-              value={7}
+              value={8}
             />
           </div>
         </form>

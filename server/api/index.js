@@ -5,6 +5,7 @@ const Events = require('../db/models/events')(db, DataTypes);
 const Games = require('../db/models/games')(db, DataTypes);
 const records = require('../db/models/records')(db, DataTypes);
 const game_records = require('../db/models/game_records')(db, DataTypes);
+const Probabilities = require('../db/models/probabilities')(db, DataTypes);
 const axios = require('axios');
 const Sequelize = require('sequelize');
 
@@ -43,8 +44,9 @@ router.put('/calculate', async (req, res, next) => {
     const response = await Events.findAndCountAll({
       where: query,
       include: {
-        model: Games, as:'game',
-        },
+        model: Games,
+        as: 'game',
+      },
       attributes: [
         'GAME_ID',
         'YEAR_ID',
@@ -59,9 +61,9 @@ router.put('/calculate', async (req, res, next) => {
     // make array of game IDs, put into object for instant lookup
     let gameIds = [];
     let gameRecords = {};
-    response.rows.forEach(row => {
-      if()
-    })
+    // response.rows.forEach(row => {
+    //   if()
+    // })
     console.log('resonse: ', response.rows[0].dataValues);
 
     // console.log('YOUR QUERY HERE', query);
@@ -127,15 +129,14 @@ const buildQuery = req => {
   console.log('original request: ', req);
   const situation = req.situation;
   let query = {};
-  query['OUTS_CT'] = +situation.outs;
-  query['START_BASES_CD'] = +situation.runners;
+  query['Outs'] = +situation.outs;
+  query['Bases'] = +situation.runners;
   if (situation.batting == 'homeTeam') {
-    query = { ...query, BAT_HOME_ID: 1 };
+    query = { ...query, Team: 'H' };
   } else {
-    query = { ...query, BAT_Home_ID: 0 };
+    query = { ...query, Team: 'V' };
   }
-  query.INN_CT = +situation.inning;
-  // query.HOME_SCORE_CT = +db.col('AWAY_SCORE_CT') - runDifferential;
+  query.Inning = +situation.inning;
   console.log(query);
   return query;
 };
