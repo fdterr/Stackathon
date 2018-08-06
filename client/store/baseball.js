@@ -8,6 +8,7 @@ const SET_INNING = 'SET_INNING';
 const SET_BATTING = 'SET_BATTING';
 const SET_HOME_SCORE = 'SET_HOME_SCORE';
 const SET_AWAY_SCORE = 'SET_AWAY_SCORE';
+const SET_RUNNERS = 'SET_RUNNERS';
 
 /**
  * INITIAL STATE
@@ -17,6 +18,7 @@ const defaultState = {
   batting: 'homeTeam',
   homeScore: -1,
   awayScore: -1,
+  runners: 0,
 };
 
 /**
@@ -48,6 +50,13 @@ export const setAwayScore = score => {
   };
 };
 
+export const setRunners = runners => {
+  return {
+    type: SET_RUNNERS,
+    runners,
+  };
+};
+
 /**
  * REDUCER
  */
@@ -66,6 +75,11 @@ export default function(state = defaultState, action) {
       return {
         ...state,
         awayScore: action.score,
+      };
+    case SET_RUNNERS:
+      return {
+        ...state,
+        runners: action.runners,
       };
     default:
       return state;
