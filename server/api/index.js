@@ -25,7 +25,7 @@ router.use('/', async (req, res, next) => {
         GAME_ID: 'BOS195204180',
         INN_CT: '1',
       },
-      include: [Games],
+      // include: [Games],
     });
     console.log('RESULT: ', result);
     // res.status(201).end();
