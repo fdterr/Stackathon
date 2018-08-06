@@ -3,17 +3,19 @@ import Innings from './Innings';
 import Runners from './Runners';
 import Score from './Score';
 import { winExpectancy } from '../store';
+import { connect } from 'react-redux';
+import store from '../store';
 
 class Calculator extends Component {
   constructor() {
     super();
+    this.state = {};
   }
 
-  onClick = async event => {
-    console.log(this.state);
-    // this.props.winExpectancy({
-
-    // })
+  handleClick = async event => {
+    // console.log(store.getState());
+    // const situation = store.getState().baseball;
+    this.props.winExpectancys(store.getState().baseball);
   };
 
   render() {
@@ -27,7 +29,9 @@ class Calculator extends Component {
         <hr />
         <Runners />
         <br />
-        <button type="submit">Calculate Win Expectancy</button>
+        <button type="submit" onClick={this.handleClick}>
+          Calculate Win Expectancy
+        </button>
       </div>
     );
   }

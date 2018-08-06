@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setInning, setBatting } from '../store';
+import { setInning, setBatting, setOuts } from '../store';
 
 class Innings extends Component {
   constructor() {
@@ -9,18 +9,23 @@ class Innings extends Component {
   }
 
   handleChange(event) {
-    // console.log(event.target.name);
-    if (event.target.name === 'batting') {
+    console.log(event.target.name);
+    if (event.target.name == 'batting') {
+      console.log('batting');
       this.props.setBattings(event.target.value);
-    } else if ((event.target.name = 'inning')) {
+    } else if (event.target.name == 'inning') {
+      console.log('inning');
       this.props.setInnings(event.target.value);
+    } else if (event.target.name == 'outs') {
+      console.log('outs');
+      this.props.setOutss(event.target.value);
     }
   }
 
   render() {
     return (
       <div>
-        <h3>Batter and Inning Input</h3>
+        <h3>Batter Inning, and Outs Input</h3>
         <form name="batting">
           <label>Which Team is Batting?</label>
           <select name="batting" onChange={this.handleChange}>
@@ -28,6 +33,35 @@ class Innings extends Component {
             <option value="awayTeam">Away Team</option>
           </select>
         </form>
+        <br />
+        <form name="outs">
+          <label>How Many Outs Are There?</label>
+          <label htmlFor="0">0 Outs</label>
+          <input
+            type="radio"
+            name="outs"
+            onChange={this.handleChange}
+            id="10"
+            value="0"
+          />
+          <label htmlFor="1">1 Out</label>
+          <input
+            type="radio"
+            name="outs"
+            onChange={this.handleChange}
+            id="11"
+            value="1"
+          />
+          <label htmlFor="2">2 Outs</label>
+          <input
+            type="radio"
+            name="outs"
+            onChange={this.handleChange}
+            id="12"
+            value="2"
+          />
+        </form>
+
         <br />
         <form name="inning" onSubmit={this.handleSubmit}>
           <label>What Inning is It?</label>
@@ -130,6 +164,9 @@ const mapDispatch = dispatch => {
     },
     setBattings: batting => {
       dispatch(setBatting(batting));
+    },
+    setOutss: outs => {
+      dispatch(setOuts(outs));
     },
   };
 };
