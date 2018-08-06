@@ -6,6 +6,7 @@ import history from '../history';
  */
 const SET_INNING = 'SET_INNING';
 const SET_BATTING = 'SET_BATTING';
+const SET_SCORE = 'SET_SCORE';
 
 /**
  * INITIAL STATE
@@ -13,6 +14,7 @@ const SET_BATTING = 'SET_BATTING';
 const defaultState = {
   inning: 1,
   batting: 'homeTeam',
+  scoreDifference: 0,
 };
 
 /**
@@ -29,47 +31,13 @@ export const setBatting = batting => {
     batting,
   };
 };
-// const getUser = user => ({ type: GET_USER, user });
-// const removeUser = () => ({ type: REMOVE_USER });
 
-/**
- * THUNK CREATORS
- */
-
-// export const me = () => async dispatch => {
-//   try {
-//     const res = await axios.get('/auth/me');
-//     dispatch(getUser(res.data || defaultUser));
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
-// export const auth = (email, password, method) => async dispatch => {
-//   let res;
-//   try {
-//     res = await axios.post(`/auth/${method}`, { email, password });
-//   } catch (authError) {
-//     return dispatch(getUser({ error: authError }));
-//   }
-
-//   try {
-//     dispatch(getUser(res.data));
-//     history.push('/home');
-//   } catch (dispatchOrHistoryErr) {
-//     console.error(dispatchOrHistoryErr);
-//   }
-// };
-
-// export const logout = () => async dispatch => {
-//   try {
-//     await axios.post('/auth/logout');
-//     dispatch(removeUser());
-//     history.push('/login');
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
+export const setScore = scoreDifference => {
+  return {
+    type: SET_SCORE,
+    scoreDifference,
+  };
+};
 
 /**
  * REDUCER
