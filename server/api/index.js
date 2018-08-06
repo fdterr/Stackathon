@@ -38,36 +38,25 @@ Games.belongsTo(Events, {
 // });
 
 router.put('/calculate', async (req, res, next) => {
+  console.log('REQUEST: ', req.body);
   const query = buildQuery(req.body);
 
   try {
     const response = await Probabilities.findAndCountAll({
       where: query,
-      // include: {
-      //   model: Games,
-      //   as: 'game',
-      // },
-      // attributes: [
-      //   'GAME_ID',
-      //   'YEAR_ID',
-      //   'HOME_TEAM_ID',
-      //   'AWAY_TEAM_ID',
-      //   'HOME_SCORE_CT',
-      //   'AWAY_SCORE_CT',
-      // ],
     });
-    // const runDifferential = situation.homeScore - situation.awayScore;
 
-    // make array of game IDs, put into object for instant lookup
-    let gameIds = [];
-    let gameRecords = {};
-    // response.rows.forEach(row => {
-    //   if()
-    // })
-    console.log('resonse: ', response.rows[0]);
-
-    // console.log('YOUR QUERY HERE', query);
-    res.end();
+    console.log('resonse: ', response.rows[0].dataValues);
+    const probability =
+      response.rows[0].dataValues.TotalWins /
+      response.rows[0].dataValues.TotalGames;
+    // const winPercent = probability.TotalWins / probabilty.totalGames;
+    console.log('Your Winning % is', probability);
+    res.send({
+      probability,
+      totalWins: response.rows[0].dataValues.TotalWins,
+      totalGames: response.rows[0].dataValues.TotalGames,
+    });
   } catch (err) {
     next(err);
   }
@@ -129,7 +118,7 @@ const buildQuery = req => {
   console.log('original request: ', req);
   const situation = req.situation;
   let query = {};
-  query['Outs'] = +situation.outs;
+  query['Outs'] = +situation.outs || +situation.Outs;
   query['Bases'] = +situation.runners;
   if (situation.batting == 'homeTeam') {
     query = { ...query, Team: 'H' };

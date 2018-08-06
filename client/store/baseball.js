@@ -22,6 +22,9 @@ const defaultState = {
   awayScore: -1,
   runners: 1,
   outs: 0,
+  probability: 0,
+  totalWins: 0,
+  totalGames: 0,
 };
 
 /**
@@ -70,6 +73,13 @@ export const setOuts = outs => {
   };
 };
 
+const calculateProbabilty = data => {
+  return {
+    type: WIN_EXPECTANCY,
+    data,
+  };
+};
+
 /**
  * Thunky stuff
  */
@@ -77,7 +87,9 @@ export const setOuts = outs => {
 export const winExpectancy = situation => {
   return async dispatch => {
     try {
-      const response = await axios.put('/api/calculate', { situation });
+      const { data } = await axios.put('/api/calculate', { situation });
+      console.log('axios resopnse', data);
+      dispatch(calculateProbabilty(data));
     } catch (err) {
       console.log(err);
     }
@@ -112,6 +124,13 @@ export default function(state = defaultState, action) {
       return {
         ...state,
         outs: action.outs,
+      };
+    case WIN_EXPECTANCY:
+      return {
+        ...state,
+        probability: action.data.probability,
+        totalGames: action.data.totalGames,
+        totalWins: action.data.totalWins,
       };
     default:
       return state;

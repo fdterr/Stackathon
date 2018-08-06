@@ -3,6 +3,11 @@
   flex-direction: column;
 }
 
+.game {
+  border: 1px solid black;
+  width: 40vw;
+}
+
 .outs {
   display: flex;
   flex-direction: column;
@@ -53,6 +58,40 @@
 
 .inputRadio {
   margin: 5px;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+}
+
+.teamNames {
+  text-decoration: underline;
+}
+
+.mets {
+  display: flex;
+  flex-direction: row;
+}
+
+.title {
+  display: flex;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+}
+
+td {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 2;
+}
+
+table {
+  display: flex;
+  justify-content: center;
 }
 
 h3 {
