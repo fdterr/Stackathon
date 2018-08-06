@@ -3,8 +3,13 @@
   flex-direction: column;
 }
 
+.live {
+  display: flex;
+}
+
 .game {
   border: 1px solid black;
+  margin: 10px;
   width: 40vw;
 }
 
