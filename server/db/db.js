@@ -6,7 +6,7 @@ const db = new Sequelize(
   process.env.DATABASE_URL ||
     `mysql://root:Tue12:23@localhost:3306/${databaseName}`,
   {
-    logging: false,
+    logging: true,
     dialect: 'mysql',
     define: {
       timestamps: false,

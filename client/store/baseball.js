@@ -9,6 +9,7 @@ const SET_BATTING = 'SET_BATTING';
 const SET_HOME_SCORE = 'SET_HOME_SCORE';
 const SET_AWAY_SCORE = 'SET_AWAY_SCORE';
 const SET_RUNNERS = 'SET_RUNNERS';
+const SET_OUTS = 'SET_OUTS';
 const WIN_EXPECTANCY = 'WIN_EXPECTANCY';
 
 /**
@@ -20,6 +21,7 @@ const defaultState = {
   homeScore: -1,
   awayScore: -1,
   runners: 0,
+  outs: 0,
 };
 
 /**
@@ -61,6 +63,13 @@ export const setRunners = runners => {
   };
 };
 
+export const setOuts = outs => {
+  return {
+    type: SET_OUTS,
+    outs,
+  };
+};
+
 /**
  * Thunky stuff
  */
@@ -68,9 +77,9 @@ export const setRunners = runners => {
 export const winExpectancy = situation => {
   return async dispatch => {
     try {
-      const response = axios.get('/api/calculate', situation);
+      const response = await axios.put('/api/calculate', { situation });
     } catch (err) {
-      console.err(err);
+      console.log(err);
     }
   };
 };
@@ -98,6 +107,11 @@ export default function(state = defaultState, action) {
       return {
         ...state,
         runners: action.runners,
+      };
+    case SET_OUTS:
+      return {
+        ...state,
+        outs: action.outs,
       };
     default:
       return state;

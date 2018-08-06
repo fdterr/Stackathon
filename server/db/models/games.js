@@ -8,11 +8,11 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.INTEGER(11),
         allowNull: false,
         defaultValue: '0',
-        primaryKey: true,
       },
       GAME_ID: {
         type: DataTypes.STRING(12),
         allowNull: true,
+        primaryKey: true,
       },
       YEAR_ID: {
         type: DataTypes.INTEGER(4),

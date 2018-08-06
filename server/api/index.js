@@ -6,47 +6,71 @@ const Games = require('../db/models/games')(db, DataTypes);
 const records = require('../db/models/records')(db, DataTypes);
 const game_records = require('../db/models/game_records')(db, DataTypes);
 const axios = require('axios');
+const Sequelize = require('sequelize');
 
 module.exports = router;
-// Events.hasMany(Games, { foreignKey: 'GAME_ID' });
-// Games.belongsTo(Events, { as: 'games', foreignKey: 'GAME_ID' });
-// Events.belongsTo(Games, { foreignKey: 'GAME_ID' });
-// Games.hasMany(Events, { foreignKey: 'GAME_ID' });
 
-// Events.belongsToMany(Games, { through: 'GAME_ID' });
-// Games.belongsToMany(Events, { through: 'GAME_ID' });
-
-router.use('/', async (req, res, next) => {
-  console.log('hit this route!', Events);
-  try {
-    const result = await Events.findAll({
-      where: {
-        YEAR_ID: '1952',
-        GAME_ID: 'BOS195204180',
-        INN_CT: '1',
-      },
-      // include: [Games],
-    });
-    console.log('RESULT: ', result);
-    // res.status(201).end();
-    res.json(result);
-  } catch (err) {
-    console.log('caught error!');
-    next(err);
-  }
+Events.belongsTo(Games, { foreignKey: 'GAME_ID', as: 'game' });
+Games.belongsTo(Events, {
+  as: 'game',
+  foreignKey: 'GAME_ID',
 });
 
-router.use('/calculate', async (req, res, next) => {
+// router.use('/', async (req, res, next) => {
+//   console.log('hit this route!', Events);
+//   try {
+//     const result = await Events.findAll({
+//       where: {
+//         YEAR_ID: '1952',
+//         GAME_ID: 'BOS195204180',
+//         INN_CT: '1',
+//       },
+//       include: { model: Games, as: 'game' },
+//     });
+//     console.log('RESULT: ', result);
+//     // res.status(201).end();
+//     res.json(result);
+//   } catch (err) {
+//     console.log('caught error!');
+//     next(err);
+//   }
+// });
+
+router.put('/calculate', async (req, res, next) => {
   const query = buildQuery(req.body);
+
   try {
-    console.log('YOUR QUERY HERE', query);
+    const response = await Events.findAndCountAll({
+      where: query,
+      include: {
+        model: Games, as:'game',
+        },
+      attributes: [
+        'GAME_ID',
+        'YEAR_ID',
+        'HOME_TEAM_ID',
+        'AWAY_TEAM_ID',
+        'HOME_SCORE_CT',
+        'AWAY_SCORE_CT',
+      ],
+    });
+    const runDifferential = situation.homeScore - situation.awayScore;
+
+    // make array of game IDs, put into object for instant lookup
+    let gameIds = [];
+    let gameRecords = {};
+    response.rows.forEach(row => {
+      if()
+    })
+    console.log('resonse: ', response.rows[0].dataValues);
+
+    // console.log('YOUR QUERY HERE', query);
     res.end();
   } catch (err) {
     next(err);
   }
 });
 
-// router.use('/users', require('./users'));
 // router.use('/scrape', async (req, res, next) => {
 //   try {
 //     // const response = await request({
@@ -99,6 +123,19 @@ router.use((req, res, next) => {
   next(error);
 });
 
-const buildQuery = request => {
-  console.log(request);
+const buildQuery = req => {
+  console.log('original request: ', req);
+  const situation = req.situation;
+  let query = {};
+  query['OUTS_CT'] = +situation.outs;
+  query['START_BASES_CD'] = +situation.runners;
+  if (situation.batting == 'homeTeam') {
+    query = { ...query, BAT_HOME_ID: 1 };
+  } else {
+    query = { ...query, BAT_Home_ID: 0 };
+  }
+  query.INN_CT = +situation.inning;
+  // query.HOME_SCORE_CT = +db.col('AWAY_SCORE_CT') - runDifferential;
+  console.log(query);
+  return query;
 };
