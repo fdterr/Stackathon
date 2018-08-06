@@ -6,7 +6,8 @@ import history from '../history';
  */
 const SET_INNING = 'SET_INNING';
 const SET_BATTING = 'SET_BATTING';
-const SET_SCORE = 'SET_SCORE';
+const SET_HOME_SCORE = 'SET_HOME_SCORE';
+const SET_AWAY_SCORE = 'SET_AWAY_SCORE';
 
 /**
  * INITIAL STATE
@@ -14,7 +15,8 @@ const SET_SCORE = 'SET_SCORE';
 const defaultState = {
   inning: 1,
   batting: 'homeTeam',
-  scoreDifference: 0,
+  homeScore: -1,
+  awayScore: -1,
 };
 
 /**
@@ -32,10 +34,17 @@ export const setBatting = batting => {
   };
 };
 
-export const setScore = scoreDifference => {
+export const setHomeScore = score => {
   return {
-    type: SET_SCORE,
-    scoreDifference,
+    type: SET_HOME_SCORE,
+    score,
+  };
+};
+
+export const setAwayScore = score => {
+  return {
+    type: SET_AWAY_SCORE,
+    score,
   };
 };
 
@@ -48,6 +57,16 @@ export default function(state = defaultState, action) {
       return { ...state, inning: action.inning };
     case SET_BATTING:
       return { ...state, batting: action.batting };
+    case SET_HOME_SCORE:
+      return {
+        ...state,
+        homeScore: action.score,
+      };
+    case SET_AWAY_SCORE:
+      return {
+        ...state,
+        awayScore: action.score,
+      };
     default:
       return state;
   }
