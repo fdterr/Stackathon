@@ -20,7 +20,7 @@ class Calculator extends Component {
 
   render() {
     return (
-      <div>
+      <div className="calculator">
         <Innings />
         <br />
         <hr />

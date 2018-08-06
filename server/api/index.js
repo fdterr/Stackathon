@@ -41,22 +41,22 @@ router.put('/calculate', async (req, res, next) => {
   const query = buildQuery(req.body);
 
   try {
-    const response = await Events.findAndCountAll({
+    const response = await Probabilities.findAndCountAll({
       where: query,
-      include: {
-        model: Games,
-        as: 'game',
-      },
-      attributes: [
-        'GAME_ID',
-        'YEAR_ID',
-        'HOME_TEAM_ID',
-        'AWAY_TEAM_ID',
-        'HOME_SCORE_CT',
-        'AWAY_SCORE_CT',
-      ],
+      // include: {
+      //   model: Games,
+      //   as: 'game',
+      // },
+      // attributes: [
+      //   'GAME_ID',
+      //   'YEAR_ID',
+      //   'HOME_TEAM_ID',
+      //   'AWAY_TEAM_ID',
+      //   'HOME_SCORE_CT',
+      //   'AWAY_SCORE_CT',
+      // ],
     });
-    const runDifferential = situation.homeScore - situation.awayScore;
+    // const runDifferential = situation.homeScore - situation.awayScore;
 
     // make array of game IDs, put into object for instant lookup
     let gameIds = [];
@@ -64,7 +64,7 @@ router.put('/calculate', async (req, res, next) => {
     // response.rows.forEach(row => {
     //   if()
     // })
-    console.log('resonse: ', response.rows[0].dataValues);
+    console.log('resonse: ', response.rows[0]);
 
     // console.log('YOUR QUERY HERE', query);
     res.end();
@@ -133,9 +133,12 @@ const buildQuery = req => {
   query['Bases'] = +situation.runners;
   if (situation.batting == 'homeTeam') {
     query = { ...query, Team: 'H' };
+    query.RunDifferential = situation.homeScore - situation.awayScore;
   } else {
     query = { ...query, Team: 'V' };
+    query.RunDifferential = situation.awayScore - situation.homeScore;
   }
+
   query.Inning = +situation.inning;
   console.log(query);
   return query;

@@ -20,7 +20,7 @@ const defaultState = {
   batting: 'homeTeam',
   homeScore: -1,
   awayScore: -1,
-  runners: 0,
+  runners: 1,
   outs: 0,
 };
 
