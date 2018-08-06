@@ -9,8 +9,8 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
     <h1>Rick Terry's Win Expectancy Calculator</h1>
     <nav>
       <div>
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Sign Up</Link>
+        <Link to="/">Home</Link>
+        <Link to="/calculator">Calculator</Link>
       </div>
     </nav>
     <hr />
