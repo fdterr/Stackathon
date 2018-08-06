@@ -6,12 +6,6 @@ const Games = require('../db/models/games')(db, DataTypes);
 const records = require('../db/models/records')(db, DataTypes);
 const game_records = require('../db/models/game_records')(db, DataTypes);
 const axios = require('axios');
-const request = require('request');
-// const Sequelize = require('sequelize');
-// const Models = require('../db/models');
-// const Events = Models.Events;
-// const User = require('../db/models/user');
-// const Events = require('../db/models/events')(Sequelize, DataTypes);
 
 module.exports = router;
 // Events.hasMany(Games, { foreignKey: 'GAME_ID' });
