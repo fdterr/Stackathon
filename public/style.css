@@ -26,6 +26,39 @@
   display: flex;
 }
 
+.scoreOptions {
+  display: flex;
+}
+
+.scoreOption {
+  display: flex;
+}
+
+.runners {
+  display: flex;
+  flex-direction: column;
+}
+
+.runnersOptions {
+  width: 50vw;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.runnersOption {
+  width: 10vw;
+  display: flex;
+  /* flex-grow: 1; */
+}
+
+.inputRadio {
+  margin: 5px;
+}
+
+h3 {
+  text-decoration: underline;
+}
+
 body {
   font-family: sans-serif;
 }

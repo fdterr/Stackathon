@@ -23,28 +23,45 @@ class Score extends Component {
   render() {
     return (
       <div>
+        <h3>Score Settings</h3>
         <form name="score">
-          <label>Home Team Score: </label>
-          <input
-            type="text"
-            onChange={this.handleChange}
-            name="homeTeamScore"
-          />
-          <label>Away Team Score: </label>
-          <input
-            type="text"
-            onChange={this.handleChange}
-            name="awayTeamScore"
-          />
+          <div className="scoreContainer">
+            <div className="scoreOptions">
+              <div className="scoreOption">
+                <b>Home Team Score: </b>
+                <input
+                  type="text"
+                  onChange={this.handleChange}
+                  name="homeTeamScore"
+                />
+              </div>
+              <div className="scoreOption">
+                <b>Away Team Score: </b>
+                <input
+                  type="text"
+                  onChange={this.handleChange}
+                  name="awayTeamScore"
+                />
+              </div>
+            </div>
+            <div>
+              <div>
+                <label>
+                  Score Difference:{' '}
+                  {this.props.homeScore !== -1 &&
+                  this.props.awayScore !== -1 ? (
+                    <b>{this.props.homeScore - this.props.awayScore} </b>
+                  ) : (
+                    <a>
+                      Please input a score value for both the home and away
+                      teams
+                    </a>
+                  )}
+                </label>
+              </div>
+            </div>
+          </div>
         </form>
-        <label>
-          Score Difference:{' '}
-          {this.props.homeScore !== -1 && this.props.awayScore !== -1 ? (
-            <a>{this.props.homeScore - this.props.awayScore} </a>
-          ) : (
-            <a>Please input a score value for both the home and away teams</a>
-          )}
-        </label>
       </div>
     );
   }

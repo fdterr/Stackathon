@@ -40,7 +40,6 @@ class Innings extends Component {
             </div>
           </div>
         </form>
-        <br />
 
         <form name="outs">
           <div className="outs">
@@ -81,7 +80,6 @@ class Innings extends Component {
             </div>
           </div>
         </form>
-        <br />
 
         <form name="inning" onSubmit={this.handleSubmit}>
           <div className="inningOptions">
