@@ -40,18 +40,19 @@ Games.belongsTo(Events, {
 router.put('/calculate', async (req, res, next) => {
   console.log('REQUEST: ', req.body);
   const query = buildQuery(req.body);
+  console.log('QUERY: ', query);
 
   try {
     const response = await Probabilities.findAndCountAll({
       where: query,
     });
 
-    console.log('resonse: ', response.rows[0].dataValues);
+    // console.log('resonse: ', response.rows[0].dataValues);
     const probability =
       response.rows[0].dataValues.TotalWins /
       response.rows[0].dataValues.TotalGames;
     // const winPercent = probability.TotalWins / probabilty.totalGames;
-    console.log('Your Winning % is', probability);
+    // console.log('Your Winning % is', probability);
     res.send({
       probability,
       totalWins: response.rows[0].dataValues.TotalWins,
@@ -115,10 +116,11 @@ router.use((req, res, next) => {
 });
 
 const buildQuery = req => {
-  console.log('original request: ', req);
+  // console.log('original request: ', req);
   const situation = req.situation;
+  console.log('SITUATION: ', situation);
   let query = {};
-  query['Outs'] = +situation.outs || +situation.Outs;
+  query['Outs'] = +situation.outs; // || +situation.Outs;
   query['Bases'] = +situation.runners;
   if (situation.batting == 'homeTeam') {
     query = { ...query, Team: 'H' };
@@ -129,6 +131,5 @@ const buildQuery = req => {
   }
 
   query.Inning = +situation.inning;
-  console.log(query);
   return query;
 };

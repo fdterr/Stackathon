@@ -6,7 +6,7 @@ import { logout } from '../store';
 
 const Navbar = () => (
   <div>
-    <h1>Rick Terry's Win Expectancy Calculator</h1>
+    <h1>Win Expectancy Calculator</h1>
     <nav>
       <div>
         <Link to="/">Home</Link>
