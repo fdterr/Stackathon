@@ -11,11 +11,7 @@ const Sequelize = require('sequelize');
 
 module.exports = router;
 
-Events.belongsTo(Games, { foreignKey: 'GAME_ID', as: 'game' });
-Games.belongsTo(Events, {
-  as: 'game',
-  foreignKey: 'GAME_ID',
-});
+router.use('/games', require('./games'));
 
 // router.use('/', async (req, res, next) => {
 //   console.log('hit this route!', Events);
@@ -70,40 +66,18 @@ router.put('/calculate', async (req, res, next) => {
 //     //   json: true,
 //     // });
 //     // console.log('response2', response);
-//     setInterval(async () => {
-//       const data = await axios(
-//         'http://statsapi.mlb.com/api/v1/game/531089/feed/live'
-//       );
-//       const temp = data.data;
-//       console.log('TEMP: ', temp);
-//       game_records.create({
-//         json: JSON.stringify(temp),
-//       });
-//     }, 20000);
+// setInterval(async () => {
+//   const data = await axios(
+//     'http://statsapi.mlb.com/api/v1/game/531089/feed/live'
+//   );
+//   const temp = data.data;
+//   console.log('TEMP: ', temp);
+//   game_records.create({
+//     json: JSON.stringify(temp),
+//   });
+// }, 20000);
 //     res.send(temp);
 //     res.end();
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
-// router.use('/test', async (req, res, next) => {
-//   console.log('hit games route', Games);
-//   try {
-//     const result = await Games.findOne({
-//       where: {
-//         YEAR_ID: '1952',
-//       },
-//       include: [Events],
-//       attributes: ['GAME_ID'],
-//       // include: {
-//       //   model: Events,
-//       //   through: {
-//       //     attributes: ['GAME_ID'],
-//       //   },
-//       // },
-//     });
-//     res.status(201).json(result);
 //   } catch (err) {
 //     next(err);
 //   }

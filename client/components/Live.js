@@ -85,41 +85,6 @@ class Live extends Component {
             ''
           )}
         </div>
-
-        <div className="game">
-          <div className="title">
-            <div className="teamName">
-              <b>Atlanta Braves</b>
-            </div>{' '}
-            @{' '}
-            <div className="teamName">
-              <b>New York Mets</b>
-            </div>
-            - 1:05 PM, ET
-          </div>
-
-          <br />
-          <div className="score">
-            <b>Current Score: </b>
-            <div>Atlanta Braves: 7</div>
-            <div>New York Mets: 4</div>
-          </div>
-          {this.props.probability != 0 ? (
-            <div className="probabilities">
-              <div>
-                Probability of winning for the New York Mets: <b>4.02%</b>
-              </div>
-              <div>
-                Total scenarios analyzed: <b>2,465</b>
-              </div>
-              <div>
-                Total wins for the New York Mets: <b>99</b>
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
-        </div>
       </div>
     );
   }

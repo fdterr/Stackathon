@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 class Runners extends Component {
   handleChange = event => {
-    console.log(event.target.name, event.target.value);
     this.props.setRunnerss(event.target.value);
   };
 

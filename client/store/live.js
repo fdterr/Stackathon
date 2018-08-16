@@ -15,19 +15,7 @@ const LOAD_DATA = 'LOAD_DATA';
 /**
  * INITIAL STATE
  */
-const defaultState = {
-  homeTeam: '',
-  awayTeam: '',
-  homeScore: 0,
-  awayScore: 0,
-  probability: 0,
-  startTime: '',
-  startDate: '',
-  homeP: '',
-  awayP: '',
-  inning: 1,
-  batting: '',
-};
+const defaultState = {};
 
 /**
  * ACTION CREATORS
@@ -43,40 +31,81 @@ const loadData = data => {
 export const fetchInitial = () => {
   return async dispatch => {
     try {
-      const { data } = await axios(
-        'http://statsapi.mlb.com/api/v1/game/531089/feed/live'
+      const { data } = await axios.get(
+        'http://statsapi.mlb.com/api/v1/schedule?sportId=1'
       );
-      const homeTeam = data.gameData.teams.home.name.full;
-      const awayTeam = data.gameData.teams.away.name.full;
-      const start = data.gameData.datetime.timeDate;
-      const split = start.split(' ');
-      const startTime = split[1];
-      const startDate = split[0];
-      const inning = data.liveData.plays.currentPlay.about.inning;
-      const awayScore = data.liveData.plays.currentPlay.result.awayScore;
-      const homeScore = data.liveData.plays.currentPlay.result.homeScore;
-      const halfInning = data.liveData.plays.currentPlay.about.halfInning;
-      const outs = data.liveData.plays.currentPlay.count.outs;
-      let batting;
-      console.log('outs', outs);
-      if (halfInning == 'bottom') {
-        batting = 'homeTeam';
-      } else {
-        batting = 'awayTeam';
-      }
-      const runners =
-        baseMatch[data.liveData.plays.currentPlay.runnerIndex.toString()];
+      const games = data.dates[0].games;
+      // console.log('ALL GAMES', games);
 
-      console.log(
-        'base match:',
-        baseMatch[data.liveData.plays.currentPlay.runnerIndex.toString()]
-      );
+      const allGames = [];
+      games.forEach(async gamePk => {
+        const response = await axios(`http://statsapi.mlb.com/${gamePk.link}`);
+        const game = response.data;
+        const homeTeam = game.gameData.teams.home.name.full;
+        const awayTeam = game.gameData.teams.away.name.full;
+        const start = game.gameData.datetime.timeDate;
+        const split = start.split(' ');
+        const startTime = split[1];
+        const startDate = split[0];
+        const inning = game.liveData.plays.currentPlay.about.inning;
+        const awayScore = game.liveData.plays.currentPlay.result.awayScore;
+        const homeScore = game.liveData.plays.currentPlay.result.homeScore;
+        const halfInning = game.liveData.plays.currentPlay.about.halfInning;
+        const outs = game.liveData.plays.currentPlay.count.outs;
+        let batting;
+        // console.log('outs', outs);
+        if (halfInning == 'bottom') {
+          batting = 'homeTeam';
+        } else {
+          batting = 'awayTeam';
+        }
+        var runnersNumeric;
+        var runners;
 
-      console.log(homeTeam, awayTeam, startTime, homeScore, awayScore, runners);
-      console.log('INITIAL DATA ', data.liveData.plays.scoringPlays);
-      console.log('INITIAL DATA ', data.liveData.plays.allPlays[38]);
-      dispatch(
-        loadData({
+        // console.log(
+        //   'previous play ',
+        //   game.liveData.plays.allPlays[game.liveData.plays.allPlays.length - 1]
+        //     .runnerIndex
+        // );
+
+        if (!game.liveData.plays.currentPlay.runnerIndex) {
+          runnersNumeric = 0;
+        } else {
+          const rawRunners = game.liveData.plays.currentPlay.runnerIndex;
+          const parsedRunners = rawRunners.join(',');
+          runnersNumeric = baseMatch[parsedRunners];
+
+          console.log(
+            'MATCH RESULTS: ',
+            game.liveData.plays.currentPlay.runners,
+            gamePk.link
+          );
+
+          // console.log(
+          //   'MATCH RESULTS: ',
+          //   runnersNumeric,
+          //   rawRunners,
+          //   parsedRunners,
+          //   gamePk.link
+          // );
+        }
+
+        // baseMatch[game.liveData.plays.currentPlay.runnerIndex.length] || 0;
+        // console.log(
+        //   'base match:',
+        //   baseMatch[game.liveData.plays.currentPlay.runnerIndex.toString()]
+        // );
+
+        // console.log(
+        //   homeTeam,
+        //   awayTeam,
+        //   startTime,
+        //   homeScore,
+        //   awayScore,
+        //   runners
+        // );
+
+        const wholeGame = {
           outs,
           batting,
           homeTeam,
@@ -87,8 +116,9 @@ export const fetchInitial = () => {
           homeScore,
           runners,
           startDate,
-        })
-      );
+        };
+        allGames.push(wholeGame);
+      });
     } catch (err) {
       console.log(err);
     }
