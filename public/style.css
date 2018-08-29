@@ -25,16 +25,17 @@
   animation: load8 1.1s infinite linear;
 }
 
+.gameCard {
+  width: 33%;
+  height: 10%;
+  border: 1px solid black;
+}
+/*
 td {
   display: flex;
   flex-direction: row;
   flex-grow: 2;
-}
-
-table {
-  display: flex;
-  justify-content: center;
-}
+} */
 
 h3 {
   text-decoration: underline;

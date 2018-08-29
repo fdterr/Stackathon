@@ -16,7 +16,9 @@ const LOADING = 'LOADING';
 /**
  * INITIAL STATE
  */
-const defaultState = {};
+const defaultState = {
+  games: [],
+};
 
 /**
  * ACTION CREATORS

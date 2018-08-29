@@ -1,8 +1,5 @@
-const User = require('./user');
 const db = require('../db');
 const DataTypes = require('sequelize/lib/data-types');
-const Events = require('./events')(db, DataTypes);
-const Games = require('./games')(db, DataTypes);
 
 /**
  * If we had any associations to make, this would be a great place to put them!
