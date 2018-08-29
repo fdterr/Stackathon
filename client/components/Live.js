@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchInitial, winExpectancy } from '../store';
-
-import axios from 'axios';
+import GameCard from './GameCard';
 
 class Live extends Component {
   componentDidMount() {
@@ -10,14 +9,15 @@ class Live extends Component {
   }
 
   render() {
+    console.log('props are ', this.props);
     return (
       <div>
         {this.props.games.length > 0 ? (
-          <div>
-            <p>Games Loaded</p>
-            {/* <p>{this.props.games}</p> */}
-          </div>
+          this.props.games.map(game => <GameCard game={game} />)
         ) : (
+          // this.props.games.forEach(game => {
+          //   <GameCard game={game} />;
+          // })
           <div className="loader" />
         )}
       </div>
