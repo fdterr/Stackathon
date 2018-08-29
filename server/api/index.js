@@ -1,37 +1,12 @@
 const router = require('express').Router();
 const db = require('../db/db');
 const DataTypes = require('sequelize/lib/data-types');
-const Events = require('../db/models/events')(db, DataTypes);
-const Games = require('../db/models/games')(db, DataTypes);
-const records = require('../db/models/records')(db, DataTypes);
-const game_records = require('../db/models/game_records')(db, DataTypes);
 const Probabilities = require('../db/models/probabilities')(db, DataTypes);
 const axios = require('axios');
 const Sequelize = require('sequelize');
-
 module.exports = router;
 
 router.use('/games', require('./games'));
-
-// router.use('/', async (req, res, next) => {
-//   console.log('hit this route!', Events);
-//   try {
-//     const result = await Events.findAll({
-//       where: {
-//         YEAR_ID: '1952',
-//         GAME_ID: 'BOS195204180',
-//         INN_CT: '1',
-//       },
-//       include: { model: Games, as: 'game' },
-//     });
-//     console.log('RESULT: ', result);
-//     // res.status(201).end();
-//     res.json(result);
-//   } catch (err) {
-//     console.log('caught error!');
-//     next(err);
-//   }
-// });
 
 router.put('/calculate', async (req, res, next) => {
   console.log('REQUEST: ', req.body);
@@ -59,30 +34,6 @@ router.put('/calculate', async (req, res, next) => {
   }
 });
 
-// router.use('/scrape', async (req, res, next) => {
-//   try {
-//     // const response = await request({
-//     //   url: 'http://statsapi.mlb.com:80/api/v1/schedule?sportId=1',
-//     //   json: true,
-//     // });
-//     // console.log('response2', response);
-// setInterval(async () => {
-//   const data = await axios(
-//     'http://statsapi.mlb.com/api/v1/game/531089/feed/live'
-//   );
-//   const temp = data.data;
-//   console.log('TEMP: ', temp);
-//   game_records.create({
-//     json: JSON.stringify(temp),
-//   });
-// }, 20000);
-//     res.send(temp);
-//     res.end();
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
 router.use((req, res, next) => {
   const error = new Error('Not Found');
   error.status = 404;
@@ -107,3 +58,47 @@ const buildQuery = req => {
   query.Inning = +situation.inning;
   return query;
 };
+
+// router.use('/scrape', async (req, res, next) => {
+//   try {
+//     // const response = await request({
+//     //   url: 'http://statsapi.mlb.com:80/api/v1/schedule?sportId=1',
+//     //   json: true,
+//     // });
+//     // console.log('response2', response);
+//     setInterval(async () => {
+//       const data = await axios(
+//         'http://statsapi.mlb.com/api/v1/game/531089/feed/live'
+//       );
+//       const temp = data.data;
+//       console.log('TEMP: ', temp);
+//       game_records.create({
+//         json: JSON.stringify(temp),
+//       });
+//     }, 20000);
+//     res.send(temp);
+//     res.end();
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+// router.use('/', async (req, res, next) => {
+//   console.log('hit this route!', Events);
+//   try {
+//     const result = await Events.findAll({
+//       where: {
+//         YEAR_ID: '1952',
+//         GAME_ID: 'BOS195204180',
+//         INN_CT: '1',
+//       },
+//       include: { model: Games, as: 'game' },
+//     });
+//     console.log('RESULT: ', result);
+//     // res.status(201).end();
+//     res.json(result);
+//   } catch (err) {
+//     console.log('caught error!');
+//     next(err);
+//   }
+// });

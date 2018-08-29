@@ -7,32 +7,8 @@ import axios from 'axios';
 class Live extends Component {
   componentDidMount() {
     this.props.fetchInitials();
-
-    // console.log('QUERY', query);
-    // const { data } = await axios.put('/api/calculate', query);
-    // console.log('RESPONSE DATA', data);
   }
 
-  componentDidUpdate() {
-    if (
-      this.props.inning != undefined &&
-      this.props.homeScore != undefined &&
-      this.props.awayScore != undefined &&
-      this.props.runners != undefined &&
-      this.props.batting != undefined &&
-      this.props.outs != undefined
-    ) {
-      const situation = {
-        outs: this.props.outs,
-        inning: this.props.inning,
-        batting: this.props.batting,
-        homeScore: this.props.homeScore,
-        awayScore: this.props.awayScore,
-        runners: this.props.runners,
-      };
-      this.props.winExpectancys(situation);
-    }
-  }
   render() {
     return (
       <div className="live">
