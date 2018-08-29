@@ -12,7 +12,6 @@ class Score extends Component {
     };
   }
   handleChange = event => {
-    console.log(event.target.name, event.target.value);
     if (event.target.name === 'homeTeamScore') {
       this.props.setHomeScores(event.target.value);
     } else if (event.target.name === 'awayTeamScore') {

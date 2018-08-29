@@ -11,13 +11,13 @@ class Innings extends Component {
   handleChange(event) {
     console.log(event.target.name);
     if (event.target.name == 'batting') {
-      console.log('batting');
+      // console.log('batting');
       this.props.setBattings(event.target.value);
     } else if (event.target.name == 'inning') {
-      console.log('inning');
+      // console.log('inning');
       this.props.setInnings(event.target.value);
     } else if (event.target.name == 'outs') {
-      console.log('outs');
+      // console.log('outs');
       this.props.setOutss(event.target.value);
     }
   }
