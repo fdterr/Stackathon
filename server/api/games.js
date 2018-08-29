@@ -35,7 +35,7 @@ router.get('/testgames', async (req, res, next) => {
       if (oneGame.status.abstractGameState !== 'Preview')
         await gameData(oneGame);
     }
-    console.log('allGames is', allGames);
+    // console.log('allGames is', allGames);
     res.redirect('/api/games/allgames');
   } catch (err) {
     console.log(err);
@@ -44,7 +44,7 @@ router.get('/testgames', async (req, res, next) => {
 
 const gameData = async function(oneGame) {
   const gameLink = `http://statsapi.mlb.com/${oneGame.link}`;
-  console.log('game link is', gameLink);
+  // console.log('game link is', gameLink);
 
   const response = await axios(gameLink);
   const game = await response.data;

@@ -9,9 +9,9 @@ module.exports = router;
 router.use('/games', require('./games'));
 
 router.put('/calculate', async (req, res, next) => {
-  console.log('REQUEST: ', req.body);
+  // console.log('REQUEST: ', req.body);
   const query = buildQuery(req.body);
-  console.log('QUERY: ', query);
+  // console.log('QUERY: ', query);
 
   try {
     const response = await Probabilities.findAndCountAll({
@@ -43,7 +43,7 @@ router.use((req, res, next) => {
 const buildQuery = req => {
   // console.log('original request: ', req);
   const situation = req.situation;
-  console.log('SITUATION: ', situation);
+  // console.log('SITUATION: ', situation);
   let query = {};
   query['Outs'] = +situation.outs; // || +situation.Outs;
   query['Bases'] = +situation.runners;

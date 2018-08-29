@@ -37,8 +37,8 @@ const loading = () => {
 };
 
 export const fetchInitial = () => {
-  dispatch(loading());
   return async dispatch => {
+    // dispatch(loading());
     try {
       const { data } = await axios.get('/api/games/testgames');
       console.log('data is', data);
@@ -79,7 +79,7 @@ const baseMatch = {
 export default function(state = defaultState, action) {
   switch (action.type) {
     case LOADING:
-      return { ...state, loading };
+      return action.data;
     case LOAD_DATA:
       return action.data;
     default:

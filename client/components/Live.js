@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchInitial, winExpectancy } from '../store';
-
-import axios from 'axios';
+import GameCard from './GameCard';
 
 class Live extends Component {
   componentDidMount() {
@@ -10,57 +9,17 @@ class Live extends Component {
   }
 
   render() {
+    console.log('props are ', this.props);
     return (
-      <div className="live">
-        <div className="game">
-          <div className="title">
-            <div className="teamName">
-              <b>{this.props.awayTeam}</b>
-            </div>{' '}
-            @{' '}
-            <div className="teamName">
-              <b>{this.props.homeTeam}</b>
-            </div>
-            - {this.props.startTime} PM, ET
-          </div>
-
-          <br />
-          <div className="score">
-            <b>Current Score: </b>
-            <div>
-              {this.props.homeTeam}: {this.props.homeScore}
-            </div>
-            <div>
-              {this.props.awayTeam}: {this.props.awayScore}
-            </div>
-          </div>
-          {this.props.probability != 0 ? (
-            <div className="probabilities">
-              <div>
-                Probability of winning for the{' '}
-                {this.props.batting === 'homeTeam'
-                  ? this.props.homeTeam
-                  : this.props.awayTeam}:{' '}
-                <b>
-                  {parseFloat(this.props.probability * 100).toFixed(2) + '%'}
-                </b>
-              </div>
-              <div>
-                Total scenarios analyzed:{' '}
-                <b> {numberWithCommas(this.props.totalGames)}</b>
-              </div>
-              <div>
-                Total wins for the{' '}
-                {this.props.batting === 'homeTeam'
-                  ? this.props.homeTeam
-                  : this.props.awayTeam}:{' '}
-                <b>{numberWithCommas(this.props.totalWins)}</b>
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
-        </div>
+      <div>
+        {this.props.games.length > 0 ? (
+          this.props.games.map(game => <GameCard game={game} />)
+        ) : (
+          // this.props.games.forEach(game => {
+          //   <GameCard game={game} />;
+          // })
+          <div className="loader" />
+        )}
       </div>
     );
   }
@@ -72,18 +31,7 @@ const numberWithCommas = x => {
 
 const mapState = state => {
   return {
-    homeTeam: state.live.homeTeam,
-    awayTeam: state.live.awayTeam,
-    startTime: state.live.startTime,
-    homeScore: state.live.homeScore,
-    awayScore: state.live.awayScore,
-    runners: state.live.runners,
-    inning: state.live.inning,
-    batting: state.live.batting,
-    outs: state.live.outs,
-    probability: state.baseball.probability,
-    totalWins: state.baseball.totalWins,
-    totalGames: state.baseball.totalGames,
+    games: state.live,
   };
 };
 

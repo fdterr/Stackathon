@@ -8,3 +8,4 @@ export { default as UserHome } from './user-home';
 export { Login, Signup } from './auth-form';
 export { default as Calculator } from './Calculator';
 export { default as Live } from './Live';
+export { default as GameCard } from './GameCard';
