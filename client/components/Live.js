@@ -11,7 +11,7 @@ class Live extends Component {
   render() {
     console.log('props are ', this.props);
     return (
-      <div>
+      <div className="cardGrid">
         {this.props.games.length > 0 ? (
           this.props.games.map(game => <GameCard game={game} />)
         ) : (

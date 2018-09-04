@@ -16,7 +16,9 @@ const LOADING = 'LOADING';
 /**
  * INITIAL STATE
  */
-const defaultState = {};
+const defaultState = {
+  games: [],
+};
 
 /**
  * ACTION CREATORS
@@ -40,7 +42,7 @@ export const fetchInitial = () => {
   return async dispatch => {
     // dispatch(loading());
     try {
-      const { data } = await axios.get('/api/games/testgames');
+      const { data } = await axios.get('/api/games/allgames');
       console.log('data is', data);
       console.table(data);
       dispatch(loadData(data));

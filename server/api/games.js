@@ -35,12 +35,31 @@ router.get('/testgames', async (req, res, next) => {
       if (oneGame.status.abstractGameState !== 'Preview')
         await gameData(oneGame);
     }
-    // console.log('allGames is', allGames);
+    console.log('allGames is', allGames);
     res.redirect('/api/games/allgames');
   } catch (err) {
     console.log(err);
   }
 });
+
+const fetchGames = async () => {
+  allGames.splice(0, allGames.length);
+  try {
+    const { data } = await axios.get(
+      'http://statsapi.mlb.com/api/v1/schedule?sportId=1'
+    );
+    const games = data.dates[0].games;
+    for (let i = 0; i < games.length; i++) {
+      const oneGame = games[i];
+      // console.log('onegame object is ', oneGame);
+      if (oneGame.status.abstractGameState !== 'Preview')
+        await gameData(oneGame);
+    }
+    console.log('all games is', allGames);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const gameData = async function(oneGame) {
   const gameLink = `http://statsapi.mlb.com/${oneGame.link}`;
@@ -55,7 +74,8 @@ const gameData = async function(oneGame) {
   const start = game.gameData.datetime.timeDate;
   const split = start.split(' ');
   const runners = game.liveData.plays.currentPlay.runners;
-
+  const homeAbbrev = game.gameData.teams.home.name.abbrev;
+  const awayAbbrev = game.gameData.teams.away.name.abbrev;
   const homeTeam = game.gameData.teams.home.name.full;
   const awayTeam = game.gameData.teams.away.name.full;
   const startTime = split[1];
@@ -65,6 +85,8 @@ const gameData = async function(oneGame) {
   const homeScore = game.liveData.linescore.home.runs;
   const halfInning = game.liveData.plays.currentPlay.about.halfInning;
   const outs = game.liveData.plays.currentPlay.count.outs;
+  const strikes = game.liveData.plays.currentPlay.count.strikes;
+  const balls = game.liveData.plays.currentPlay.count.balls;
 
   if (halfInning == 'bottom') {
     batting = 'homeTeam';
@@ -88,6 +110,11 @@ const gameData = async function(oneGame) {
     baseSituation = [0];
   }
 
+  const homeHits = game.liveData.linescore.home.hits;
+  const awayHits = game.liveData.linescore.away.hits;
+  const homeErrors = game.liveData.linescore.home.errors;
+  const awayErrors = game.liveData.linescore.away.errors;
+
   const wholeGame = {
     outs,
     batting,
@@ -99,6 +126,14 @@ const gameData = async function(oneGame) {
     homeScore,
     runners: baseSituation,
     startDate,
+    balls,
+    strikes,
+    homeAbbrev,
+    awayAbbrev,
+    homeHits,
+    awayHits,
+    homeErrors,
+    awayErrors,
   };
 
   allGames.push(wholeGame);
@@ -132,5 +167,11 @@ const calcRunners = (runners, type, result) => {
   runnersArray.sort();
   return runnersArray;
 };
+
+setTimeout(async () => {
+  console.log('awaiting to fetch');
+  await fetchGames();
+  console.log('fetched');
+}, 60);
 
 module.exports = router;
