@@ -42,6 +42,25 @@ router.get('/testgames', async (req, res, next) => {
   }
 });
 
+const fetchGames = async () => {
+  allGames.splice(0, allGames.length);
+  try {
+    const { data } = await axios.get(
+      'http://statsapi.mlb.com/api/v1/schedule?sportId=1'
+    );
+    const games = data.dates[0].games;
+    for (let i = 0; i < games.length; i++) {
+      const oneGame = games[i];
+      // console.log('onegame object is ', oneGame);
+      if (oneGame.status.abstractGameState !== 'Preview')
+        await gameData(oneGame);
+    }
+    console.log('all games is', allGames);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const gameData = async function(oneGame) {
   const gameLink = `http://statsapi.mlb.com/${oneGame.link}`;
   // console.log('game link is', gameLink);
@@ -91,6 +110,11 @@ const gameData = async function(oneGame) {
     baseSituation = [0];
   }
 
+  const homeHits = game.liveData.linescore.home.hits;
+  const awayHits = game.liveData.linescore.away.hits;
+  const homeErrors = game.liveData.linescore.home.errors;
+  const awayErrors = game.liveData.linescore.away.errors;
+
   const wholeGame = {
     outs,
     batting,
@@ -106,6 +130,10 @@ const gameData = async function(oneGame) {
     strikes,
     homeAbbrev,
     awayAbbrev,
+    homeHits,
+    awayHits,
+    homeErrors,
+    awayErrors,
   };
 
   allGames.push(wholeGame);
@@ -139,5 +167,11 @@ const calcRunners = (runners, type, result) => {
   runnersArray.sort();
   return runnersArray;
 };
+
+setTimeout(async () => {
+  console.log('awaiting to fetch');
+  await fetchGames();
+  console.log('fetched');
+}, 60);
 
 module.exports = router;
