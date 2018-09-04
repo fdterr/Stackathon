@@ -30,12 +30,33 @@
   height: 10%;
   border: 1px solid black;
 }
-/*
-td {
+
+.cardTable {
   display: flex;
   flex-direction: row;
-  flex-grow: 2;
-} */
+  justify-content: flex-start;
+}
+
+.cardColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* height: 100%; */
+  width: 5%;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+/* Types of Card Columns */
+.teamName {
+  text-align: left;
+  width: 37%;
+}
+
+.firstCell {
+  width: 10%;
+}
 
 h3 {
   text-decoration: underline;

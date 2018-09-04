@@ -35,7 +35,7 @@ router.get('/testgames', async (req, res, next) => {
       if (oneGame.status.abstractGameState !== 'Preview')
         await gameData(oneGame);
     }
-    // console.log('allGames is', allGames);
+    console.log('allGames is', allGames);
     res.redirect('/api/games/allgames');
   } catch (err) {
     console.log(err);
@@ -55,7 +55,8 @@ const gameData = async function(oneGame) {
   const start = game.gameData.datetime.timeDate;
   const split = start.split(' ');
   const runners = game.liveData.plays.currentPlay.runners;
-
+  const homeAbbrev = game.gameData.teams.home.name.abbrev;
+  const awayAbbrev = game.gameData.teams.away.name.abbrev;
   const homeTeam = game.gameData.teams.home.name.full;
   const awayTeam = game.gameData.teams.away.name.full;
   const startTime = split[1];
@@ -65,6 +66,8 @@ const gameData = async function(oneGame) {
   const homeScore = game.liveData.linescore.home.runs;
   const halfInning = game.liveData.plays.currentPlay.about.halfInning;
   const outs = game.liveData.plays.currentPlay.count.outs;
+  const strikes = game.liveData.plays.currentPlay.count.strikes;
+  const balls = game.liveData.plays.currentPlay.count.balls;
 
   if (halfInning == 'bottom') {
     batting = 'homeTeam';
@@ -99,6 +102,10 @@ const gameData = async function(oneGame) {
     homeScore,
     runners: baseSituation,
     startDate,
+    balls,
+    strikes,
+    homeAbbrev,
+    awayAbbrev,
   };
 
   allGames.push(wholeGame);
