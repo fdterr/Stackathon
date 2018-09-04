@@ -1,14 +1,16 @@
 import React from 'react';
 
 export default function GameCard(props) {
+  const homeTeam = `bbclub-${props.game.homeAbbrev.toLowerCase()}`;
+  const awayTeam = `bbclub-${props.game.awayAbbrev.toLowerCase()}`;
   return (
     <table className="gameCard cardTable">
       <div className="cardColumn firstCell">
         <td>
-          <i class="bbclub-bos" />
+          <i class={homeTeam} />
         </td>
         <td>
-          <i class="bbclub-bos" />
+          <i class={awayTeam} />
         </td>
       </div>
 
