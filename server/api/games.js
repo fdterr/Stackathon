@@ -22,32 +22,19 @@ router.get('/allgames', (req, res, next) => {
   res.send(allGames);
 });
 
-router.get('/testgames', async (req, res, next) => {
-  allGames.splice(0, allGames.length);
-  try {
-    const { data } = await axios.get(
-      'http://statsapi.mlb.com/api/v1/schedule?sportId=1'
-    );
-    const games = data.dates[0].games;
-    for (let i = 0; i < games.length; i++) {
-      const oneGame = games[i];
-      // console.log('onegame object is ', oneGame);
-      if (oneGame.status.abstractGameState !== 'Preview')
-        await gameData(oneGame);
-    }
-    console.log('allGames is', allGames);
-    res.redirect('/api/games/allgames');
-  } catch (err) {
-    console.log(err);
-  }
-});
+const fetchInitial = async () => {
+  await fetchGames();
+};
 
 const fetchGames = async () => {
-  allGames.splice(0, allGames.length);
   try {
+    allGames.splice(0, allGames.length);
     const { data } = await axios.get(
       'http://statsapi.mlb.com/api/v1/schedule?sportId=1'
     );
+    if (!data.length) {
+      return;
+    }
     const games = data.dates[0].games;
     for (let i = 0; i < games.length; i++) {
       const oneGame = games[i];
@@ -168,10 +155,12 @@ const calcRunners = (runners, type, result) => {
   return runnersArray;
 };
 
-setTimeout(async () => {
-  console.log('awaiting to fetch');
-  await fetchGames();
-  console.log('fetched');
-}, 60);
+fetchInitial().then(
+  setInterval(async () => {
+    console.log('awaiting to fetch');
+    await fetchGames();
+    console.log('fetched');
+  }, 60000)
+);
 
 module.exports = router;
