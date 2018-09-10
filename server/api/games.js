@@ -75,7 +75,7 @@ const fetchGames = async () => {
       // if (oneGame.status.abstractGameState !== 'Preview')
       await gameData(oneGame);
     }
-    console.log('all games is', allGames);
+    // console.log('all games is', allGames);
   } catch (err) {
     console.log(err);
   }
@@ -83,7 +83,7 @@ const fetchGames = async () => {
 
 const gameData = async function(oneGame) {
   const gameLink = `http://statsapi.mlb.com/${oneGame.link}`;
-  console.log('game date is', oneGame.gameDate);
+  // console.log('game date is', oneGame.gameDate);
 
   const response = await axios(gameLink);
   const game = response.data;
@@ -99,17 +99,17 @@ const gameData = async function(oneGame) {
   let outs;
   let strikes;
   let balls;
-  let homeHits;
-  let awayHits;
-  let homeErrors;
-  let awayErrors;
+  let homeHits = 0;
+  let awayHits = 0;
+  let homeErrors = 0;
+  let awayErrors = 0;
 
   const preview =
     oneGame.status.abstractGameState == 'Preview'
       ? // && oneGame.status.detailedState == 'Pre-Game'
         true
       : false;
-  console.log('gameLink is', gameLink, 'preview is', preview);
+  // console.log('gameLink is', gameLink, 'preview is', preview);
   if (preview) {
     split = oneGame.gameDate.split('T');
     split[1] = split[1].slice(0, -1);
@@ -137,9 +137,26 @@ const gameData = async function(oneGame) {
   const awayAbbrev = nameAbbrevMatch[oneGame.teams.away.team.name];
   const homeTeam = oneGame.teams.home.team.name;
   const awayTeam = oneGame.teams.away.team.name;
-  const startTime = split[1];
   const startDate = split[0];
 
+  // Start Time
+  let startTime;
+  let time = game.gameData.datetime.time;
+  let timeSplit = time.split(':');
+  let hours = timeSplit[0];
+  console.log(
+    'time',
+    time,
+    'hours',
+    hours,
+    'offset',
+    +game.gameData.venue.timeZone.offset
+  );
+  let minutes = timeSplit[1];
+  hours = hours - +game.gameData.venue.timeZone.offset;
+  startTime = hours + ':' + minutes + ' PM ET';
+
+  // Who is Batting?
   if (halfInning == 'bottom') {
     batting = 'homeTeam';
   } else {
@@ -168,11 +185,11 @@ const gameData = async function(oneGame) {
     homeTeam,
     awayTeam,
     inning,
-    startTime,
     awayScore,
     homeScore,
     runners: baseSituation,
     startDate,
+    startTime,
     balls,
     strikes,
     homeAbbrev,

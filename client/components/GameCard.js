@@ -20,10 +20,7 @@ export default function GameCard(props) {
       </div>
 
       <div className="cardColumn teamName">
-        {/* <div className="title">
-          <br />
-        </div> */}
-        <br />
+        <div>Start Time: {props.game.startTime}</div>
         <div>{props.game.awayTeam} @</div>
         <div>{props.game.homeTeam}</div>
       </div>
@@ -36,14 +33,7 @@ export default function GameCard(props) {
         <div>{props.game.inning}</div>
       </div>
 
-      <div className="cardColumn linescore">
-        <div className="title">
-          <b>H</b>
-        </div>
-        <div>{props.game.awayHits}</div>
-        <div>{props.game.homeHits}</div>
-      </div>
-
+      {/* Runs */}
       <div className="cardColumn linescore">
         <div className="title">
           <b>R</b>
@@ -52,6 +42,16 @@ export default function GameCard(props) {
         <div>{props.game.homeScore}</div>
       </div>
 
+      {/* Hits */}
+      <div className="cardColumn linescore">
+        <div className="title">
+          <b>H</b>
+        </div>
+        <div>{props.game.awayHits}</div>
+        <div>{props.game.homeHits}</div>
+      </div>
+
+      {/* Errors */}
       <div className="cardColumn linescore">
         <div className="title">
           <b>E</b>
@@ -65,6 +65,20 @@ export default function GameCard(props) {
     // </div>
   );
 }
+
+const timeConvert = time => {
+  let timeArr = time.split(':');
+  let hours = +timeArr[0];
+  let minutes = timeArr[1];
+  if (+timeArr[0] === 0) {
+    hours = +timeArr[0] + 12;
+  } else if (+timeArr[0] > 12) {
+    hours = +timeArr[0] - 12;
+  }
+
+  let newTime = hours + ':' + minutes;
+  return newTime;
+};
 
 // export default GameCard;
 

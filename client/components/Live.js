@@ -15,9 +15,6 @@ class Live extends Component {
         {this.props.games.length > 0 ? (
           this.props.games.map(game => <GameCard game={game} />)
         ) : (
-          // this.props.games.forEach(game => {
-          //   <GameCard game={game} />;
-          // })
           <div className="loader" />
         )}
       </div>
