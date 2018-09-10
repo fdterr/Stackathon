@@ -65,9 +65,7 @@ const fetchGames = async () => {
     const { data } = await axios.get(
       'http://statsapi.mlb.com/api/v1/schedule?sportId=1'
     );
-    // if (!data.length) {
-    //   return;
-    // }
+
     const games = data.dates[0].games;
     for (let i = 0; i < games.length; i++) {
       const oneGame = games[i];
@@ -153,7 +151,7 @@ const gameData = async function(oneGame) {
     +game.gameData.venue.timeZone.offset
   );
   let minutes = timeSplit[1];
-  hours = hours - +game.gameData.venue.timeZone.offset;
+  hours = hours - +game.gameData.venue.timeZone.offset - 4;
   startTime = hours + ':' + minutes + ' PM ET';
 
   // Who is Batting?
