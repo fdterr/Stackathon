@@ -116,31 +116,27 @@ const gameData = async function(oneGame) {
   } else {
     preview = false;
   }
-  console.log(
-    'gameLink is',
-    gameLink,
-    'state is',
-    state,
-    'preview is',
-    preview
-  );
-  // const preview =
-  //   oneGame.status.abstractGameState != 'Live'
-  //     ? // && oneGame.status.detailedState == 'Pre-Game'
-  //       true
-  //     : false;
-  if (preview) {
+  // console.log(
+  //   'gameLink is',
+  //   gameLink,
+  //   'state is',
+  //   state,
+  //   'preview is',
+  //   preview
+  // );
+
+  if (state == 'P' || state == 'D') {
     split = oneGame.gameDate.split('T');
     split[1] = split[1].slice(0, -1);
   } else {
-    console.log(
-      'gameLink is',
-      gameLink,
-      'home lineScore',
-      game.liveData.linescore.home,
-      'away lineScore',
-      game.liveData.linescore.away
-    );
+    // console.log(
+    //   'gameLink is',
+    //   gameLink,
+    //   'home lineScore',
+    //   game.liveData.linescore.home,
+    //   'away lineScore',
+    //   game.liveData.linescore.away
+    // );
     result = game.liveData.plays.currentPlay.result.event || '';
     start = game.gameData.datetime.timeDate;
     split = start.split(' ');
@@ -156,6 +152,10 @@ const gameData = async function(oneGame) {
     awayHits = game.liveData.linescore.away.hits;
     homeErrors = game.liveData.linescore.home.errors;
     awayErrors = game.liveData.linescore.away.errors;
+  }
+
+  if (state == 'F' || state == 'D') {
+    inning = 'Final';
   }
 
   // console.log(oneGame);
@@ -182,7 +182,7 @@ const gameData = async function(oneGame) {
   // let minutes = timeSplit[1];
   // hours = hours - +game.gameData.venue.timeZone.offset - 4;
   // startTime = hours + ':' + minutes + ' PM ET';
-  startTime = time;
+  startTime = time + ' PM ET';
 
   // Who is Batting?
   if (halfInning == 'bottom') {
@@ -228,6 +228,7 @@ const gameData = async function(oneGame) {
     homeErrors,
     awayErrors,
     preview,
+    state,
   };
 
   allGames.push(wholeGame);
