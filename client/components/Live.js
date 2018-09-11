@@ -13,11 +13,10 @@ class Live extends Component {
     return (
       <div className="cardGrid">
         {this.props.games.length > 0 ? (
-          this.props.games.map(game => <GameCard game={game} />)
+          this.props.games.map(game => (
+            <GameCard game={game} live={game.statusCode} />
+          ))
         ) : (
-          // this.props.games.forEach(game => {
-          //   <GameCard game={game} />;
-          // })
           <div className="loader" />
         )}
       </div>
