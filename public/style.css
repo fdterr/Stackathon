@@ -33,15 +33,17 @@
 }
 .cardTable {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   width: 33%;
   margin-bottom: 10px;
+  /* border: 1px solid black; */
 }
 
 .cardColumns {
   display: flex;
   width: 100%;
+  flex-direction: row;
 }
 
 .cardColumn {
@@ -56,6 +58,18 @@
   padding-top: 3px;
   padding-bottom: 3px;
   border: 1px solid black;
+}
+
+.balls-strikes-runners {
+  display: flex;
+  direction: row;
+  width: 62%;
+  /* justify-content: space-evenly; */
+  padding-left: 7px;
+  padding-right: 7px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 /* Types of Card Columns */

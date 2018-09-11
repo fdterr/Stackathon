@@ -76,12 +76,14 @@ export default function GameCard(props) {
         </div>
       </div>
       {/* End of Card Columns */}
+      <div>
+        <BallsStrikesRunners
+          balls={props.game.balls}
+          strikes={props.game.strikes}
+          runners={props.runners}
+        />
+      </div>
     </div>
-    // <br />
-    //{' '}
-    // <div>
-    //   <BallsStrikesRunners balls={props.game.balls} strikes={props.game.strikes} runners={props.runners}
-    // </div>
   );
 }
 
