@@ -102,16 +102,45 @@ const gameData = async function(oneGame) {
   let homeErrors = 0;
   let awayErrors = 0;
 
-  const preview =
-    oneGame.status.abstractGameState == 'Preview'
-      ? // && oneGame.status.detailedState == 'Pre-Game'
-        true
-      : false;
-  // console.log('gameLink is', gameLink, 'preview is', preview);
+  let state = oneGame.status.codedGameState;
+
+  let preview;
+  if (state != 'I') {
+    if (state == 'P' || state == 'D') {
+      preview = true;
+    } else if (state == 'F' || state == 'O') {
+      preview = false;
+    } else {
+      preview = true;
+    }
+  } else {
+    preview = false;
+  }
+  console.log(
+    'gameLink is',
+    gameLink,
+    'state is',
+    state,
+    'preview is',
+    preview
+  );
+  // const preview =
+  //   oneGame.status.abstractGameState != 'Live'
+  //     ? // && oneGame.status.detailedState == 'Pre-Game'
+  //       true
+  //     : false;
   if (preview) {
     split = oneGame.gameDate.split('T');
     split[1] = split[1].slice(0, -1);
   } else {
+    console.log(
+      'gameLink is',
+      gameLink,
+      'home lineScore',
+      game.liveData.linescore.home,
+      'away lineScore',
+      game.liveData.linescore.away
+    );
     result = game.liveData.plays.currentPlay.result.event || '';
     start = game.gameData.datetime.timeDate;
     split = start.split(' ');
@@ -140,19 +169,20 @@ const gameData = async function(oneGame) {
   // Start Time
   let startTime;
   let time = game.gameData.datetime.time;
-  let timeSplit = time.split(':');
-  let hours = timeSplit[0];
-  console.log(
-    'time',
-    time,
-    'hours',
-    hours,
-    'offset',
-    +game.gameData.venue.timeZone.offset
-  );
-  let minutes = timeSplit[1];
-  hours = hours - +game.gameData.venue.timeZone.offset - 4;
-  startTime = hours + ':' + minutes + ' PM ET';
+  // let timeSplit = time.split(':');
+  // let hours = timeSplit[0];
+  // console.log(
+  //   'time',
+  //   time,
+  //   'hours',
+  //   hours,
+  //   'offset',
+  //   +game.gameData.venue.timeZone.offset
+  // );
+  // let minutes = timeSplit[1];
+  // hours = hours - +game.gameData.venue.timeZone.offset - 4;
+  // startTime = hours + ':' + minutes + ' PM ET';
+  startTime = time;
 
   // Who is Batting?
   if (halfInning == 'bottom') {
@@ -166,6 +196,7 @@ const gameData = async function(oneGame) {
     batting = batting === 'homeTeam' ? 'awayTeam' : 'homeTeam';
   }
 
+  // Runners Are?
   let baseSituation;
   if (runners.length > 0) {
     if (result === '') {
@@ -196,6 +227,7 @@ const gameData = async function(oneGame) {
     awayHits,
     homeErrors,
     awayErrors,
+    preview,
   };
 
   allGames.push(wholeGame);
