@@ -125,7 +125,7 @@ const gameData = async function(oneGame) {
   //   preview
   // );
 
-  if (state == 'P' || state == 'D') {
+  if (state == 'P' || state == 'D' || state == 'S') {
     split = oneGame.gameDate.split('T');
     split[1] = split[1].slice(0, -1);
   } else {
