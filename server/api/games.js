@@ -129,14 +129,14 @@ const gameData = async function(oneGame) {
     split = oneGame.gameDate.split('T');
     split[1] = split[1].slice(0, -1);
   } else {
-    // console.log(
-    //   'gameLink is',
-    //   gameLink,
-    //   'home lineScore',
-    //   game.liveData.linescore.home,
-    //   'away lineScore',
-    //   game.liveData.linescore.away
-    // );
+    console.log(
+      'gameLink is',
+      gameLink,
+      'home lineScore',
+      game.liveData.linescore.home,
+      'away lineScore',
+      game.liveData.linescore.away
+    );
     result = game.liveData.plays.currentPlay.result.event || '';
     start = game.gameData.datetime.timeDate;
     split = start.split(' ');
