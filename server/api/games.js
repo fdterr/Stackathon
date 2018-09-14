@@ -106,7 +106,7 @@ const gameData = async function(oneGame) {
 
   let preview;
   if (state != 'I') {
-    if (state == 'P' || state == 'D') {
+    if (state == 'P' || state == 'D' || state == 'S') {
       preview = true;
     } else if (state == 'F' || state == 'O') {
       preview = false;
@@ -125,7 +125,7 @@ const gameData = async function(oneGame) {
   //   preview
   // );
 
-  if (state == 'P' || state == 'D' || state == 'S') {
+  if (preview) {
     split = oneGame.gameDate.split('T');
     split[1] = split[1].slice(0, -1);
   } else {
@@ -171,14 +171,6 @@ const gameData = async function(oneGame) {
   let time = game.gameData.datetime.time;
   // let timeSplit = time.split(':');
   // let hours = timeSplit[0];
-  // console.log(
-  //   'time',
-  //   time,
-  //   'hours',
-  //   hours,
-  //   'offset',
-  //   +game.gameData.venue.timeZone.offset
-  // );
   // let minutes = timeSplit[1];
   // hours = hours - +game.gameData.venue.timeZone.offset - 4;
   // startTime = hours + ':' + minutes + ' PM ET';

@@ -31,9 +31,9 @@ export default function GameCard(props) {
                 <div>PPD</div>
               ) : state == 'F' || state == 'O' ? (
                 <div>Final</div>
-              ) : (
-                <div>something 3</div>
-              )
+              ) : state == 'S' ? (
+                <div>Scheduled</div>
+              ) : null
             ) : props.game.batting === 'homeTeam' ? (
               <div>
                 <div>Bottom</div>
