@@ -4,7 +4,7 @@ const databaseName = 'retrosheet';
 
 const db = new Sequelize(
   process.env.DATABASE_URL ||
-    `mysql://root:Tue12:23@localhost:3306/${databaseName}`,
+    `mysql://root:rickisgreat@localhost:3306/${databaseName}`,
   {
     logging: false,
     dialect: 'mysql',
