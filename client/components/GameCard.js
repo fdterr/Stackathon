@@ -16,7 +16,7 @@ export default function GameCard(props) {
 
         {/* team icons */}
         <div className="cardColumn teamName">
-          <div>Start Time: {props.game.startTime}</div>
+          <br />
           <div>{props.game.awayTeam} @</div>
           <div>{props.game.homeTeam}</div>
         </div>
@@ -32,11 +32,11 @@ export default function GameCard(props) {
               ) : state == 'F' || state == 'O' ? (
                 <div>Final</div>
               ) : state == 'S' ? (
-                <div>Scheduled</div>
+                <div>Schld</div>
               ) : null
             ) : props.game.batting === 'homeTeam' ? (
               <div>
-                <div>Bottom</div>
+                <div>Bot.</div>
                 <div>{props.game.inning}</div>
               </div>
             ) : (
@@ -76,7 +76,7 @@ export default function GameCard(props) {
         </div>
       </div>
       {/* End of Card Columns */}
-      <div>
+      <div className="situation">
         <BallsStrikesRunners
           balls={props.game.balls}
           strikes={props.game.strikes}
