@@ -29,13 +29,13 @@
   display: flex;
   flex-wrap: wrap;
   /* align-self: center; */
-  /* justify-content: center; */
+  justify-content: center;
 }
 .cardTable {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 33%;
+  width: 40%;
   margin-bottom: 10px;
   /* border: 1px solid black; */
   margin-left: 5px;
