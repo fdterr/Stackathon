@@ -22,13 +22,17 @@ export default function GameCard(props) {
         </div>
 
         {/* innings */}
-        <div className="cardColumn">
+        <div className="cardColumn inning">
           <br />
           <div>
             {/* Calculating what to display for innings */}
             {state != 'I' ? (
               state == 'P' || state == 'D' ? (
-                <div>PPD</div>
+                state == 'P' ? (
+                  <div>Pre-Game</div>
+                ) : (
+                  <div>Postponed</div>
+                )
               ) : state == 'F' || state == 'O' ? (
                 <div>Final</div>
               ) : state == 'S' ? (
@@ -36,7 +40,7 @@ export default function GameCard(props) {
               ) : null
             ) : props.game.batting === 'homeTeam' ? (
               <div>
-                <div>Bot.</div>
+                <div>Bottom</div>
                 <div>{props.game.inning}</div>
               </div>
             ) : (
