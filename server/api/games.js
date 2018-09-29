@@ -54,17 +54,18 @@ const nameAbbrevMatch = {
 router.get('/allgames', (req, res, next) => {
   res.send(
     allGames.sort((a, b) => {
-      const results = ['I', 'F'];
       let aI = a['state'] == 'I';
-      let aF = a['state'] == 'F';
+      let aF = a['state'] == 'F' || a['state'] == 'O';
       let bI = b['state'] == 'I';
-      let bF = b['state'] == 'F';
+      let bF = b['state'] == 'F' || b['state'] == 'O';
 
       let aName = a['homeTeam'].toString();
       let bName = b['homeTeam'].toString();
-      console.log('name comp', 'a', aName, 'b', bName, aName > bName);
+      console.log('a', a['awayTeam'], aI, aF, bI, bF);
 
-      if (aI && bI) {
+      if (aF && bF) {
+        return aName > bName ? -1 : 1;
+      } else if (aI && bI) {
         return aName > bName ? -1 : 1;
       } else if (aI && bF) {
         return -1;

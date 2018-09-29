@@ -9,21 +9,27 @@ import { me } from './store';
  * COMPONENT
  */
 class Routes extends Component {
+  constructor() {
+    super();
+  }
   componentDidMount() {
     // this.props.loadInitialData();
+    this.props.history.push('/home');
   }
 
   render() {
     const { isLoggedIn } = this.props;
 
     return (
-      <Switch>
-        {/* Routes placed here are available to all visitors */}
-        <Route path="/home" component={Home} />
-        <Route path="/calculator" component={Calculator} />
-        <Route path="/live" component={Live} />
-        {/* <Route path="/signup" component={Signup} /> */}
-      </Switch>
+      <div>
+        <Switch>
+          {/* Routes placed here are available to all visitors */}
+          <Route path="/home" component={Home} />
+          <Route path="/calculator" component={Calculator} />
+          <Route path="/live" component={Live} />
+          {/* <Route path="/signup" component={Signup} /> */}
+        </Switch>
+      </div>
     );
   }
 }

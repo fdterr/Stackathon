@@ -5,30 +5,30 @@ import { connect } from 'react-redux';
 /**
  * COMPONENT
  */
-export const Home = props => {
-  const { email } = props;
+export default function Home(props) {
+  // const { email } = props;
 
   return (
-    <div>
-      <h3>Welcome, {email}</h3>
+    <div className="test">
+      <h3>Welcome Baseball Lovers!</h3>
     </div>
   );
-};
+}
 
 /**
  * CONTAINER
  */
-const mapState = state => {
-  return {
-    email: state.user.email,
-  };
-};
+// const mapState = state => {
+//   return {
+//     email: state.user.email,
+//   };
+// };
 
-export default connect(mapState)(UserHome);
+// export default connect(mapState)(Home);
 
 /**
  * PROP TYPES
  */
-UserHome.propTypes = {
-  email: PropTypes.string,
-};
+// UserHome.propTypes = {
+//   email: PropTypes.string,
+// };
