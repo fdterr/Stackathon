@@ -104,6 +104,7 @@ const gameData = async function(oneGame) {
 
   let state = oneGame.status.codedGameState;
 
+  /** Is this game still in preview? */
   let preview;
   if (state != 'I') {
     if (state == 'P' || state == 'D' || state == 'S') {
@@ -116,14 +117,11 @@ const gameData = async function(oneGame) {
   } else {
     preview = false;
   }
-  // console.log(
-  //   'gameLink is',
-  //   gameLink,
-  //   'state is',
-  //   state,
-  //   'preview is',
-  //   preview
-  // );
+  /** End */
+
+  /** Hitter & Pitcher? */
+  let pitcher;
+  let batter;
 
   if (preview) {
     split = oneGame.gameDate.split('T');
@@ -152,6 +150,18 @@ const gameData = async function(oneGame) {
     awayHits = game.liveData.linescore.away.hits;
     homeErrors = game.liveData.linescore.home.errors;
     awayErrors = game.liveData.linescore.away.errors;
+    let pitcherId = 'ID' + game.liveData.plays.currentPlay.matchup.pitcher;
+    let batterId = 'ID' + game.liveData.plays.currentPlay.matchup.batter;
+    pitcher =
+      game.liveData.players.allPlayers[pitcherId].name.last +
+      ', ' +
+      game.liveData.players.allPlayers[pitcherId].name.first[0] +
+      '.';
+    batter =
+      game.liveData.players.allPlayers[batterId].name.last +
+      ', ' +
+      game.liveData.players.allPlayers[batterId].name.first[0] +
+      '.';
   }
 
   if (state == 'F' || state == 'D') {
@@ -221,6 +231,8 @@ const gameData = async function(oneGame) {
     awayErrors,
     preview,
     state,
+    pitcher,
+    batter,
   };
 
   allGames.push(wholeGame);

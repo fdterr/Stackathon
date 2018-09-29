@@ -86,6 +86,8 @@ export default function GameCard(props) {
           strikes={props.game.strikes}
           runners={props.runners}
           outs={props.game.outs}
+          pitcher={props.game.pitcher}
+          batter={props.game.batter}
         />
       </div>
     </div>

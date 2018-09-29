@@ -21,7 +21,7 @@ export default function BallStrikesRunners(props) {
       </div>
 
       <div className="pitcher-hitter">
-        P: David Wright <br /> B: David Wright
+        P: {props.pitcher} <br /> B: {props.batter}
       </div>
     </div>
   );
