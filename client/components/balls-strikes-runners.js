@@ -21,7 +21,9 @@ export default function BallStrikesRunners(props) {
       </div>
 
       <div className="pitcher-hitter">
-        P: {props.pitcher} <br /> B: {props.batter}
+        <b>P: </b>
+        {props.pitcher} <br /> <b>B: </b>
+        {props.batter}
       </div>
     </div>
   );
