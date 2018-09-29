@@ -76,9 +76,34 @@
   justify-content: space-evenly;
   padding-left: 7px;
   padding-right: 7px;
+  align-items: center;
   border-left: 1px solid black;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
+}
+
+.runners {
+  transform: rotate(45deg);
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  background: black;
+  width: 20px;
+  height: 20px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.base {
+  border: 1px solid white;
+  background: blue;
+  width: 40%;
+  height: 40%;
+}
+
+.home {
+  background: black;
 }
 
 /* Types of Card Columns */
