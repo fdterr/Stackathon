@@ -9,7 +9,7 @@ const Navbar = () => (
     <h1>Win Expectancy Calculator</h1>
     <nav>
       <div>
-        <Link to="/">Home</Link>
+        <Link to="/home">Home</Link>
         <Link to="/calculator">Calculator</Link>
         <Link to="/live">Live Calculations</Link>
       </div>
