@@ -52,7 +52,37 @@ const nameAbbrevMatch = {
 };
 
 router.get('/allgames', (req, res, next) => {
-  res.send(allGames);
+  res.send(
+    allGames.sort((a, b) => {
+      const results = ['I', 'F'];
+      let aI = a['state'] == 'I';
+      let aF = a['state'] == 'F';
+      let bI = b['state'] == 'I';
+      let bF = b['state'] == 'F';
+
+      let aName = a['homeTeam'].toString();
+      let bName = b['homeTeam'].toString();
+      console.log('name comp', 'a', aName, 'b', bName, aName > bName);
+
+      if (aI && bI) {
+        return aName > bName ? -1 : 1;
+      } else if (aI && bF) {
+        return -1;
+      } else if (aI && !bF && !bI) {
+        return -1;
+      } else if (aF && bI) {
+        return 1;
+      } else if (bI && !aI && !aF) {
+        return 1;
+      } else if (aF && !bF && !bI) {
+        return -1;
+      } else if (bF && !aI && !aF) {
+        return 1;
+      } else {
+        return aName > bName ? -1 : 1;
+      }
+    })
+  );
 });
 
 const fetchInitial = async () => {
@@ -127,14 +157,14 @@ const gameData = async function(oneGame) {
     split = oneGame.gameDate.split('T');
     split[1] = split[1].slice(0, -1);
   } else {
-    console.log(
-      'gameLink is',
-      gameLink,
-      'home lineScore',
-      game.liveData.linescore.home,
-      'away lineScore',
-      game.liveData.linescore.away
-    );
+    // console.log(
+    //   'gameLink is',
+    //   gameLink,
+    //   'home lineScore',
+    //   game.liveData.linescore.home,
+    //   'away lineScore',
+    //   game.liveData.linescore.away
+    // );
     result = game.liveData.plays.currentPlay.result.event || '';
     start = game.gameData.datetime.timeDate;
     split = start.split(' ');
