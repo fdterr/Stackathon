@@ -14,7 +14,25 @@ export default function BallStrikesRunners(props) {
       </div>
 
       <div className="runners">
-        <div className="base" />
+        <div
+          className={
+            props.runners === 1
+              ? 'base empty'
+              : props.runners === 2
+                ? 'base empty'
+                : props.runners === 3
+                  ? 'base occupied'
+                  : props.runners === 4
+                    ? 'base occupied'
+                    : props.runners === 5
+                      ? 'base empty'
+                      : props.runners === 6
+                        ? 'base empty'
+                        : props.runners === 7
+                          ? 'base occupied'
+                          : 'base occupied'
+          }
+        />
         <div className="base" />
         <div className="base" />
         <div className="base home" />

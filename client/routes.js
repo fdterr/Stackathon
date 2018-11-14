@@ -14,7 +14,7 @@ class Routes extends Component {
   }
   componentDidMount() {
     // this.props.loadInitialData();
-    this.props.history.push('/home');
+    this.props.history.push('/live');
   }
 
   render() {

@@ -34,6 +34,15 @@ router.put('/calculate', async (req, res, next) => {
   }
 });
 
+router.post('/swcombine', async (req, res, next) => {
+  try {
+    console.log('request received');
+    res.send('helo');
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.use((req, res, next) => {
   const error = new Error('Not Found');
   error.status = 404;

@@ -108,6 +108,10 @@
   height: 40%;
 }
 
+.empty {
+  background: black;
+}
+
 .home {
   background: black;
 }

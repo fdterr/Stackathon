@@ -61,7 +61,6 @@ router.get('/allgames', (req, res, next) => {
 
       let aName = a['homeTeam'].toString();
       let bName = b['homeTeam'].toString();
-      console.log('a', a['awayTeam'], aI, aF, bI, bF);
 
       if (aF && bF) {
         return aName > bName ? -1 : 1;
@@ -169,7 +168,7 @@ const gameData = async function(oneGame) {
     result = game.liveData.plays.currentPlay.result.event || '';
     start = game.gameData.datetime.timeDate;
     split = start.split(' ');
-    runners = game.liveData.plays.currentPlay.runners;
+    runners = baseMatch[game.liveData.plays.currentPlay.runners];
     inning = game.liveData.plays.currentPlay.about.inning;
     awayScore = game.liveData.linescore.away.runs;
     homeScore = game.liveData.linescore.home.runs;
@@ -231,7 +230,7 @@ const gameData = async function(oneGame) {
 
   // Runners Are?
   let baseSituation;
-  if (runners.length > 0) {
+  if (runners && runners.length > 0) {
     if (result === '') {
       baseSituation = calcRunners(runners, 'start', result);
     } else {
