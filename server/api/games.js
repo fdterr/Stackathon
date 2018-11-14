@@ -297,14 +297,14 @@ const calcRunners = (runners, type, result) => {
   return runnersArray;
 };
 
-fetchInitial()
-  .then(console.log('have fetchedInitial'))
-  .then(
-    setInterval(async () => {
-      console.log('awaiting to fetch');
-      await fetchGames();
-      console.log('fetched');
-    }, 60000)
-  );
+// fetchInitial()
+//   .then(console.log('have fetchedInitial'))
+//   .then(
+//     setInterval(async () => {
+//       console.log('awaiting to fetch');
+//       await fetchGames();
+//       console.log('fetched');
+//     }, 60000)
+//   );
 
 module.exports = router;
