@@ -34,7 +34,7 @@ router.put('/calculate', async (req, res, next) => {
   }
 });
 
-router.post('/swcombine', async (req, res, next) => {
+router.use('/swcombine', async (req, res, next) => {
   try {
     console.log('request received');
     res.send('helo');
