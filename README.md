@@ -5,7 +5,9 @@
 Very simple setup, simply run:
 ```npm install```
 
-## RetroSheet Downloader
+
+ 
+## RetroSheet Downloader (OBSOLETE)
 
 To download the Retrosheet files needed to create the database, cd into the retrosheet-downloader (downloader created by [Matt Dennewitz](https://github.com/mattdennewitz/retrosheet-downloader)
 
